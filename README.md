@@ -12,6 +12,9 @@ Yüklemeniz için gerekli olan paketler `requirements.txt` de mevcut.
   - Bu projenin dizinine yapıştırıp ismini `libdarknet.so` olarak güncelleyin
   - Sorununuz tekrar ederse Google'layın?
 
+## Development
+Development için **branch** oluşturarak gidiyoruz arkadaşlar. Master dan branch oluşturun. Geliştirme yapın sonra **pull request** oluşturun. 
+
 ## Authors
 - Abdullah Furkan Özbek
 - Ayşe Sena Modanlıoğlu
