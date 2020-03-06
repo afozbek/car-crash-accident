@@ -112,8 +112,8 @@ dmypy.json
 # statics
 *.avi
 *.mp4
-# *.jpg
-# *.png
+*.jpg
+*.png
 
 # vscode
 *.vscode
