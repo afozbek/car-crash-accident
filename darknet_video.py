@@ -169,3 +169,5 @@ if __name__ == "__main__":
     else:
         print(f"{bcolors.FAIL}\t VIDEO YUKLENIRKEN HATA OLUŞTU 🤕🤕 {bcolors.ENDC}")
         print("The video path is not correct. Please check the video file path \n")
+
+    print(f"{bcolors.OKGREEN}\t YOLO BAŞARI İLE SONLANDIRILDI! TEBRİK EDERİM 😏😇 {bcolors.ENDC}")
