@@ -1,6 +1,5 @@
 import cv2
 import numpy as np
-import argparse
 
 # SIMPLE IMAGE
 # ./darknet detector test cfg/coco.data cfg/yolov3.cfg yolov3.weights data/dog.jpg
@@ -27,42 +26,29 @@ import argparse
   from 255 to (classes + 5) x 3
 """
 
-IMAGE_PATH="IMAGE_PATH"
-CFG_FILE="CFG_FILE"
-WEIGHT_FILE="WEIGHT_FILE"
-NAMES_FILE="NAMES_FILE"
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
 
-# handle command line arguments
-parser = argparse.ArgumentParser()
-parser.add_argument('-i', '--image', required=True, help = 'path to input image')
-parser.add_argument('-c', '--config', required=True, help = 'path to yolo config file')
-parser.add_argument('-w', '--weights', required=True, help = 'path to yolo pre-trained weights')
-parser.add_argument('-n', '--names', required=False, help = 'path to yolo pre-trained weights')
+# Çıktıları denemek isterseniz aşağıdan bakabilirsiniz.
+# print(f"{bcolors.FAIL} VIDEO YUKLENIRKEN HATA OLUŞTU 🤕🤕 {bcolors.ENDC}")
+# print(f"{bcolors.OKBLUE} SUCCESSFULLY INSTALLED 🤕🤕 {bcolors.ENDC}")
+# print(f"{bcolors.OKGREEN} VIDEO YUKLENIRKEN HATA OLUŞTU 🤕🤕 {bcolors.ENDC}")
+# print(f"{bcolors.HEADER} VIDEO YUKLENIRKEN HATA OLUŞTU 🤕🤕 {bcolors.ENDC}")
+# print(f"{bcolors.WARNING} VIDEO YUKLENIRKEN HATA OLUŞTU 🤕🤕 {bcolors.ENDC}")
+# print(f"{bcolors.UNDERLINE} VIDEO YUKLENIRKEN HATA OLUŞTU 🤕🤕 {bcolors.ENDC}")
 
-args = vars(parser.parse_args())
+def useDetections(detections):
+  """
+  We will implement an algorithm to use this detections dictionary
 
-options = {
-  IMAGE_PATH: args["image"],
-  CFG_FILE: args["config"],
-  WEIGHT_FILE: args["weights"],
-  NAMES_FILE: args["names"],
-}
+  and eventually returns if any car crash accident happens
 
-image_path = options[IMAGE_PATH]
-cfg_file = options[CFG_FILE]
-weight_file = options[WEIGHT_FILE]
-names_file = options[NAMES_FILE]
-
-print(image_path)
-print(cfg_file)
-print(weight_file)
-
-# Load network arch.
-# darknet = Darknet(cfg_file)
-
-# Load pre trained weights
-# darknet.load_weights(weight_file)
-
-# Load COCO obj classes
-# class_names = load_class_names(names_file)
-# print(darknet)
+  If happens we will try to inform others that accident happens
+  """
