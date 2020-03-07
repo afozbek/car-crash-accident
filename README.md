@@ -17,6 +17,15 @@ Yüklemeniz için gerekli olan paketler `requirements.txt` de mevcut.
 ## Development
 Development için **branch** oluşturarak gidiyoruz arkadaşlar. Master dan branch oluşturun. Geliştirme yapın sonra **pull request** oluşturun. 
 
+## Brach Yapısı
+master branch ine dokunmuyoruz arkadaşlar. Readme güncellemeleri falan için yapıcaksanız güncelleyin. Diğer türlü yapı şu şekilde
+- master
+  - development
+    - develop_furkan
+    - develop_sena
+    - develop_sevval
+şeklinde olacaktır
+
 ## Authors
 - Abdullah Furkan Özbek
 - Ayşe Sena Modanlıoğlu
