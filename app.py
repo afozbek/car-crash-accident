@@ -45,10 +45,25 @@ class bcolors:
 # print(f"{bcolors.UNDERLINE} VIDEO YUKLENIRKEN HATA OLUŞTU 🤕🤕 {bcolors.ENDC}")
 
 def useDetections(detections):
-  """
-  We will implement an algorithm to use this detections dictionary
+    """
+    We will implement an algorithm to use this detections dictionary
 
-  and eventually returns if any car crash accident happens
+    and eventually returns if any car crash accident happens
 
-  If happens we will try to inform others that accident happens
-  """
+    If happens we will try to inform others that accident happens
+    """
+    for result in detections:
+        label, confidence, coordinates = result
+        (
+        bounding_box_x_px,
+        bounding_box_y_px,
+        bounding_box_width_px,
+        bounding_box_height_px
+        ) = coordinates
+
+        print("IMAGE LABEL:", label)
+        print("IMAGE CONFIDENCE:", confidence)
+        print("IMAGE COORDINATES:", coordinates)
+        print("\n")
+
+    print("\n\n\n")
