@@ -11,7 +11,7 @@ Yüklemeniz için gerekli olan paketler `requirements.txt` de mevcut.
 
 - Eğer kütüphane kaynaklı sıkıntı olursa;
   - Darknet'i build ettikten sonra çıkan libdark.so yu kopyalayın
-  - Bu projenin dizinine yapıştırıp ismini `libdarknet.so` olarak güncelleyin
+  - Bu projenin ana dizinine yapıştırıp, ismini `libdarknet.so` olarak güncelleyin
   - Sorununuz tekrar ederse Google'layın?
 
 ## Development
