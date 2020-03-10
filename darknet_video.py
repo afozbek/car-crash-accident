@@ -7,6 +7,8 @@ import numpy as np
 import time
 import darknet
 
+from app import useDetections, bcolors
+
 def convertBack(x, y, w, h):
     xmin = int(round(x - (w / 2)))
     xmax = int(round(x + (w / 2)))
@@ -125,6 +127,10 @@ def YOLO(
         darknet.copy_image_from_bytes(darknet_image,frame_resized.tobytes())
 
         detections = darknet.detect_image(netMain, metaMain, darknet_image, thresh=0.25)
+
+        # TODO: DO SOMETHING WITH THE DETECTIONS
+        useDetections(detections)
+
         image = cvDrawBoxes(detections, frame_resized)
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         print(1 / (time.time() - prev_time))
@@ -138,5 +144,30 @@ def YOLO(
     cap.release()
     out.release()
 
+import argparse
+from pathlib import Path
 if __name__ == "__main__":
-    YOLO(screenRecord=True)
+    # handle command line arguments
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-d', '--directory', type=Path, required=False, default=Path(__file__).absolute().parent / "data/videos", help = 'path to default video directory')
+    parser.add_argument('-v', '--video', type=Path, required=False, default = "car-accident-2.mp4", help = 'path to video file')
+
+    parser.add_argument('--rec', dest='record', action='store_true')
+    parser.add_argument('--no-rec', dest='record', action='store_false')
+    parser.set_defaults(record=True)
+
+    args = vars(parser.parse_args())
+
+    dirPath = args["directory"]
+    videoPath = args["video"]
+    totalVideoPath = args["directory"] / args["video"]
+
+    if os.path.exists(totalVideoPath):
+        print(f"{bcolors.OKGREEN}\t MESSAGE: Starting the YOLO func 🤘🤘.{bcolors.ENDC}")
+
+        YOLO(videoPath=str(totalVideoPath), screenRecord=args["record"])
+    else:
+        print(f"{bcolors.FAIL}\t VIDEO YUKLENIRKEN HATA OLUŞTU 🤕🤕 {bcolors.ENDC}")
+        print("The video path is not correct. Please check the video file path \n")
+
+    print(f"{bcolors.OKGREEN}\t YOLO BAŞARI İLE SONLANDIRILDI! TEBRİK EDERİM 😏😇 {bcolors.ENDC}")

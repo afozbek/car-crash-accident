@@ -28,10 +28,10 @@ Windows Python 2.7 version: https://github.com/AlexeyAB/darknet/blob/fc496d52bf2
 """
 #pylint: disable=R, W0401, W0614, W0703
 from ctypes import *
-import math
 import random
 import os
 import cv2
+from app import bcolors
 
 DARKNET_FORCE_CPU=False
 FORCE_CPU=False
@@ -304,11 +304,11 @@ metaMain = None
 altNames = None
 
 def performDetect(
-    imagePath="data/dog.jpg",
+    imagePath="./data/dog.jpg",
     thresh = 0.25,
-    configPath = "cfg/yolov3.cfg",
-    weightPath = "yolov3.weights",
-    metaPath = "cfg/coco-new.data",
+    configPath = "./cfg/yolov3.cfg",
+    weightPath = "./yolov3.weights",
+    metaPath = "./cfg/coco-new.data",
     showImage = True,
     makeImageOnly = False,
     initOnly = False
@@ -457,25 +457,34 @@ def performDetect(
             print("Unable to show image: "+str(e))
     return detections
 
-
-
 import argparse
+from pathlib import Path
 if __name__ == "__main__":
 
     # handle command line arguments
     parser = argparse.ArgumentParser()
-    parser.add_argument('-i', '--image', required=False, help = 'path to input image')
+    parser.add_argument('-d', '--directory', type=Path, required=False, default=Path(__file__).absolute().parent / "data/images", help = 'path to default image directory')
+    parser.add_argument('-i', '--image', type=Path, required=False, default = "traffic-cars.jpg", help = 'path to image file')
+    parser.add_argument('-show', type=bool, required=False, default=False, help="To display the image make True")
 
     args = vars(parser.parse_args())
-    predictions = {}
-    showImage=True
-    if not args["image"]:
-        predictions = performDetect(showImage=showImage)
+
+    dirPath = args["directory"]
+    imagePath = args["image"]
+    totalImagePath = args["directory"] / args["image"]
+
+    if os.path.exists(totalImagePath):
+        print(f"{bcolors.OKGREEN}\t MESSAGE: Starting the performDetect method... 🤘🤘.{bcolors.ENDC}")
+        predictions = performDetect(showImage = args["show"], imagePath = str(totalImagePath))
     else:
-        predictions = performDetect(showImage= showImage, imagePath = args["image"])
+        print(f"{bcolors.FAIL}\t RESIM DOSYASI YUKLENIRKEN HATA OLUŞTU 🤕🤕 {bcolors.ENDC}")
+        print("The image path is not correct. Please check the image file path \n")
+
 
     for result in predictions:
         label, confidence, coordinates = result
         print("IMAGE LABEL:", label)
         print("IMAGE CONFIDENCE:", confidence)
         print("IMAGE COORDINATES:", coordinates)
+
+    print(f"{bcolors.OKGREEN}\t METHOD BAŞARI İLE TAMAMLANDI! TEBRİK EDERİM 😏😇 {bcolors.ENDC}")
