@@ -96,7 +96,7 @@ def YOLO(
     try:
         validateYOLO(configPath, weightPath, metaPath)
     except Exception:
-        print("Error Happened in ValidateYOLo")
+        print("Error Happened in ValidateYOLO")
         return
 
     # Select a video element to apply YOLO
@@ -122,10 +122,17 @@ def YOLO(
         prev_time = time.time()
         ret, frame_read = cap.read()
         frame_rgb = cv2.cvtColor(frame_read, cv2.COLOR_BGR2RGB)
+
+        # Resized borderless video frame
         frame_resized = cv2.resize(frame_rgb, (darknet.network_width(netMain), darknet.network_height(netMain)), interpolation=cv2.INTER_LINEAR)
 
-        darknet.copy_image_from_bytes(darknet_image,frame_resized.tobytes())
+        # cv2.imshow("frame", frame_resized)
+        # time to wait after each iteration (for video speed)
+        # time.sleep(0.016)
 
+        darknet.copy_image_from_bytes(darknet_image, frame_resized.tobytes())
+
+        # We have now detections dictionary
         detections = darknet.detect_image(netMain, metaMain, darknet_image, thresh=0.25)
 
         # TODO: DO SOMETHING WITH THE DETECTIONS
