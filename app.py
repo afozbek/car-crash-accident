@@ -2,9 +2,7 @@ import cv2
 import numpy as np
 
 from deepcrash.centroidtracker import CentroidTracker
-from imutils.video import VideoStream
 import argparse
-import imutils
 import time
 
 # Simple Video Capturing
