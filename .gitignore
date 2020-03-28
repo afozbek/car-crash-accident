@@ -120,3 +120,5 @@ dmypy.json
 
 # weights
 *.weights
+
+libdarknet.so
