@@ -50,25 +50,7 @@ def useDetections(detections, img, centroidTracker):
     If happens we will try to inform others that accident happens
     """
 
-    # rects = []
-    # for detection in detections:
-    #     _, confidence, coordinates = detection
-    #     x, y, w, h = detection[2][0],\
-    #         detection[2][1],\
-    #         detection[2][2],\
-    #         detection[2][3]
-
-    #     xmin, ymin, xmax, ymax = convertBack(
-    #         float(x), float(y), float(w), float(h))
-    #     box = (xmin, ymin, xmax, ymax)
-
-    #     pt1 = (xmin, ymin)
-    #     pt2 = (xmax, ymax)
-
-    #     rects.append(box)
-    #     print(box)
-
-    #     cv2.rectangle(img, pt1, pt2, (0, 255, 0), 2)
+    img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
     rects = draw_rectangles(detections, img)
 
     objects = centroidTracker.update(rects)
@@ -78,27 +60,30 @@ def useDetections(detections, img, centroidTracker):
     cv2.imshow('Car Accident', img)
 
 
+DEFAULT_CONFIDENCE = 0.5
 
 def draw_rectangles(detections, img):
     rects = []
     for detection in detections:
         _, confidence, coordinates = detection
-        x, y, w, h = detection[2][0],\
-            detection[2][1],\
-            detection[2][2],\
-            detection[2][3]
 
-        xmin, ymin, xmax, ymax = convertBack(
-            float(x), float(y), float(w), float(h))
-        box = (xmin, ymin, xmax, ymax)
+        if confidence > DEFAULT_CONFIDENCE:
+            x, y, w, h = detection[2][0],\
+                detection[2][1],\
+                detection[2][2],\
+                detection[2][3]
 
-        pt1 = (xmin, ymin)
-        pt2 = (xmax, ymax)
+            xmin, ymin, xmax, ymax = convertBack(
+                float(x), float(y), float(w), float(h))
+            box = (xmin, ymin, xmax, ymax)
 
-        rects.append(box)
-        print(box)
+            pt1 = (xmin, ymin)
+            pt2 = (xmax, ymax)
 
-        cv2.rectangle(img, pt1, pt2, (0, 255, 0), 2)
+            rects.append(box)
+            print(box)
+
+            cv2.rectangle(img, pt1, pt2, (0, 255, 0), 2)
 
     return rects
 

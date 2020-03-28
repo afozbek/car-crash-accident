@@ -13,37 +13,6 @@ from pathlib import Path
 from app import useDetections, bcolors
 from deepcrash.centroidtracker import CentroidTracker
 
-def convertBack(x, y, w, h):
-    xmin = int(round(x - (w / 2)))
-    xmax = int(round(x + (w / 2)))
-    ymin = int(round(y - (h / 2)))
-    ymax = int(round(y + (h / 2)))
-    return xmin, ymin, xmax, ymax
-
-CONFIDENCE = 0.6
-
-def cvDrawBoxes(detections, img):
-    for detection in detections:
-        confidence = detection[1]
-
-        if confidence > CONFIDENCE:
-            x, y, w, h = detection[2][0],\
-                detection[2][1],\
-                detection[2][2],\
-                detection[2][3]
-            xmin, ymin, xmax, ymax = convertBack(
-                float(x), float(y), float(w), float(h))
-            pt1 = (xmin, ymin)
-            pt2 = (xmax, ymax)
-
-            cv2.rectangle(img, pt1, pt2, (0, 255, 0), 2)
-            cv2.putText(img,
-                        detection[0].decode() +
-                        " [" + str(round(detection[1] * 100, 2)) + "]",
-                        (pt1[0], pt1[1] - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5,
-                        [0, 255, 0], 2)
-    return img
-
 netMain = None
 metaMain = None
 altNames = None
@@ -108,7 +77,7 @@ def YOLO(
         print("Error Happened in ValidateYOLO")
         return
 
-    centroidTracker = CentroidTracker()
+    centroidTracker = CentroidTracker(50)
 
     # Select a video element to apply YOLO
     cap = cv2.VideoCapture(videoPath)
@@ -127,7 +96,6 @@ def YOLO(
                                     darknet.network_height(netMain),3)
 
     # Prepare video
-    time.sleep(1.5)
     print("Starting the YOLO loop...")
 
     while True:
@@ -147,46 +115,7 @@ def YOLO(
         # Main App Function
         useDetections(detections, frame_resized, centroidTracker)
 
-        # rects = []
-        # # TODO: DO SOMETHING WITH THE DETECTIONS
-        # # useDetections(detections, centroidTracker)
-        # for detection in detections:
-        #     label, confidence, coordinates = detection
-        #     x, y, w, h = detection[2][0],\
-        #         detection[2][1],\
-        #         detection[2][2],\
-        #         detection[2][3]
-
-        #     xmin, ymin, xmax, ymax = convertBack(
-        #         float(x), float(y), float(w), float(h))
-        #     box = (xmin, ymin, xmax, ymax)
-
-        #     pt1 = (xmin, ymin)
-        #     pt2 = (xmax, ymax)
-
-        #     rects.append(box)
-        #     print(box)
-
-        #     cv2.rectangle(frame_resized, pt1, pt2, (0, 255, 0), 2)
-
-
-        # objects = centroidTracker.update(rects)
-
-        # for (objectID, centroid) in objects.items():
-        #     # draw both the ID of the object and the centroid of the
-        #     # object on the output frame
-        #     text = "ID {}".format(objectID)
-        #     cv2.putText(frame_resized, text, (centroid[0] - 10, centroid[1] - 10),
-        #         cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
-        #     cv2.circle(frame_resized, (centroid[0], centroid[1]), 4, (0, 255, 0), -1)
-
-        # cv2.imshow('Car Accident', frame_resized)
-
-
-        # image = cvDrawBoxes(detections, frame_resized)
-        # image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-        # print(1 / (time.time() - prev_time))
-        # cv2.imshow('Car Accident', image)
+        print(1 / (time.time() - prev_time))
 
         # If 'esc' or 'q' key pressed break the loop
         k = cv2.waitKey(2) & 0xFF
