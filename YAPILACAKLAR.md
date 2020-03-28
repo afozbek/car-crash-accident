@@ -23,6 +23,7 @@ Algorithms
 - correlation-based tracking algorithms.
 
 ## centroid tracking algorithm steps
+**Euclidean distance.** - Araştırılmalı
 **Step #1**: Accept bounding box coordinates and compute centroids
 
 
