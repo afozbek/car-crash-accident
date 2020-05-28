@@ -133,7 +133,7 @@ if __name__ == "__main__":
 
     parser.add_argument('--rec', dest='record', action='store_true')
     parser.add_argument('--no-rec', dest='record', action='store_false')
-    parser.set_defaults(record=True)
+    parser.set_defaults(record=False)
 
     args = vars(parser.parse_args())
 
