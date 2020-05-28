@@ -5,21 +5,13 @@ from deepcrash.centroidtracker import CentroidTracker
 import argparse
 import time
 
-# Simple Video Capturing
-# python darknet_video.py --no-rec
-
-"""
-- Modify your cfg file (e.g. yolov3.cfg), change the 3 classes on line
-  - 610,
-  - 696,
-  - 783
-  from 80 to classes
-- Change the 3 filters in cfg file on line
-  - 603,
-  - 689,
-  - 776
-  from 255 to (classes + 5) x 3
-"""
+# Çıktıları denemek isterseniz aşağıdan bakabilirsiniz.
+# print(f"{bcolors.FAIL} VIDEO YUKLENIRKEN HATA OLUŞTU 🤕🤕 {bcolors.ENDC}")
+# print(f"{bcolors.OKBLUE} SUCCESSFULLY INSTALLED 🤕🤕 {bcolors.ENDC}")
+# print(f"{bcolors.OKGREEN} VIDEO YUKLENIRKEN HATA OLUŞTU 🤕🤕 {bcolors.ENDC}")
+# print(f"{bcolors.HEADER} VIDEO YUKLENIRKEN HATA OLUŞTU 🤕🤕 {bcolors.ENDC}")
+# print(f"{bcolors.WARNING} VIDEO YUKLENIRKEN HATA OLUŞTU 🤕🤕 {bcolors.ENDC}")
+# print(f"{bcolors.UNDERLINE} VIDEO YUKLENIRKEN HATA OLUŞTU 🤕🤕 {bcolors.ENDC}")
 
 class bcolors:
     HEADER = '\033[95m'
@@ -30,14 +22,6 @@ class bcolors:
     ENDC = '\033[0m'
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
-
-# Çıktıları denemek isterseniz aşağıdan bakabilirsiniz.
-# print(f"{bcolors.FAIL} VIDEO YUKLENIRKEN HATA OLUŞTU 🤕🤕 {bcolors.ENDC}")
-# print(f"{bcolors.OKBLUE} SUCCESSFULLY INSTALLED 🤕🤕 {bcolors.ENDC}")
-# print(f"{bcolors.OKGREEN} VIDEO YUKLENIRKEN HATA OLUŞTU 🤕🤕 {bcolors.ENDC}")
-# print(f"{bcolors.HEADER} VIDEO YUKLENIRKEN HATA OLUŞTU 🤕🤕 {bcolors.ENDC}")
-# print(f"{bcolors.WARNING} VIDEO YUKLENIRKEN HATA OLUŞTU 🤕🤕 {bcolors.ENDC}")
-# print(f"{bcolors.UNDERLINE} VIDEO YUKLENIRKEN HATA OLUŞTU 🤕🤕 {bcolors.ENDC}")
 
 def useDetections(detections, img, centroidTracker):
     """
@@ -57,7 +41,7 @@ def useDetections(detections, img, centroidTracker):
 
     cv2.imshow('Car Accident', img)
 
-
+# Hassaslık oranı araç seçimleri için
 DEFAULT_CONFIDENCE = 0.5
 
 def draw_rectangles(detections, img):
