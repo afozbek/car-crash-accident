@@ -26,9 +26,7 @@ class bcolors:
 def useDetections(detections, img, centroidTracker):
     """
     We will implement an algorithm to use this detections dictionary
-
     and eventually returns if any car crash accident happens
-
     If happens we will try to inform others that accident happens
     """
 
@@ -45,11 +43,11 @@ def useDetections(detections, img, centroidTracker):
         # Kaza oluştu ise ekrana çiz
         draw_errors(img, box)
 
-    # cv2.imshow("Car Accident", img)
+    cv2.imshow("Car Accident", img)
 
     import matplotlib.pyplot as plt
-    plt.imshow(img)
-    plt.show()
+    # plt.imshow(img)
+    # plt.show()
 
 def find_accidents(rects):
     is_accident_happen = False
@@ -69,19 +67,140 @@ def find_accidents(rects):
             print("\nLOGLAMA\n")
             print("BOX-A: ", str(rects[i]))
             print("BOX-B: ", str(rects[j]))
+            
+            #if (A_xmin < B_xmin and B_xmin < A_xmax and B_xmax > A_xmax) and ((A_ymin < B_ymin and B_ymin < A_ymax ) or (B_ymin < A_ymin and A_ymin < B_ymax) ) or (A_ymin < B_ymin and B_ymin < A_ymax and B_ymax > A_ymax):
 
-            if (A_xmin < B_xmin and B_xmin < A_xmax and B_xmax > A_xmax) or (A_ymin < B_ymin and B_ymin < A_ymax and B_ymax > A_ymax):
+            if (A_xmin < B_xmin and B_xmin < A_xmax and B_xmax > A_xmax) and (A_ymin < B_ymin and B_ymin < A_ymax and B_ymax > A_ymax): # 7
                 print("\n\n\n")
                 print(f"{bcolors.FAIL} KAZA BULUNDU 🤕🤕 {bcolors.ENDC}")
                 print("\n\n\n")
                 is_accident_happen = True
                 box = rects[i]
-            elif  (B_xmin < A_xmin and A_xmin < B_xmax and A_xmax > B_xmax) or (B_ymin < A_ymin and A_ymin < B_ymax and A_ymax > B_ymax):
+            elif (B_xmin < A_xmin and A_xmin < B_xmax and A_xmax > B_xmax) and (B_ymin < A_ymin and A_ymin < B_ymax and A_ymax > B_ymax): # 1
                 print("\n\n\n")
                 print(f"{bcolors.FAIL} KAZA BULUNDU 🤕🤕 {bcolors.ENDC}")
                 print("\n\n\n")
                 is_accident_happen = True
                 box = rects[i]
+
+            elif (B_xmin < A_xmin and A_xmin < B_xmax and A_xmax > B_xmax) and (A_ymin < B_ymin and B_ymin < B_ymax and A_ymax < B_ymax): # 2
+                print("\n\n\n")
+                print(f"{bcolors.FAIL} KAZA BULUNDU 🤕🤕 {bcolors.ENDC}")
+                print("\n\n\n")
+                is_accident_happen = True
+                box = rects[i]
+
+            elif (B_xmin < A_xmin and A_xmin < B_xmax and A_xmax > B_xmax) and (A_ymin < B_ymin and B_ymin < A_ymax and B_ymax > A_ymax): # 3
+                print("\n\n\n")
+                print(f"{bcolors.FAIL} KAZA BULUNDU 🤕🤕 {bcolors.ENDC}")
+                print("\n\n\n")
+                is_accident_happen = True
+                box = rects[i]
+
+            elif (A_xmin < B_xmin and B_xmin < A_xmax and B_xmax > A_xmax) and (B_ymin < A_ymin and A_ymin < B_ymax and A_ymax > B_ymax): # 5  
+                print("\n\n\n")
+                print(f"{bcolors.FAIL} KAZA BULUNDU 🤕🤕 {bcolors.ENDC}")
+                print("\n\n\n")
+                is_accident_happen = True
+                box = rects[i]
+
+            elif (A_xmin < B_xmin and B_xmin < A_xmax and B_xmax > A_xmax) and (A_ymin < B_ymin and B_ymin < B_ymax and A_ymax > B_ymax): # 6
+                print("\n\n\n")
+                print(f"{bcolors.FAIL} KAZA BULUNDU 🤕🤕 {bcolors.ENDC}")
+                print("\n\n\n")
+                is_accident_happen = True
+                box = rects[i]
+
+            elif (A_xmin < B_xmin and B_xmin < B_xmax and A_xmax > B_xmax) and (A_ymin < B_ymin and B_ymin < A_ymax and B_ymax > A_ymax): # 4 
+                print("\n\n\n")
+                print(f"{bcolors.FAIL} KAZA BULUNDU 🤕🤕 {bcolors.ENDC}")
+                print("\n\n\n")
+                is_accident_happen = True
+                box = rects[i]
+
+            # elif (A_xmin < B_xmin and B_xmin < B_xmax and A_xmax > B_xmax) and (B_ymin < A_ymin and A_ymin < B_ymax and A_ymax > B_ymax):  # 8
+            #     print("\n\n\n")
+            #     print(f"{bcolors.FAIL} KAZA BULUNDU 🤕🤕 {bcolors.ENDC}")
+            #     print("\n\n\n")
+            #     is_accident_happen = True
+            #     box = rects[i]
+
+            elif (A_xmin < B_xmin and B_xmin < B_xmax and A_xmax > B_xmax) and (A_ymin < B_ymin and B_ymin < A_ymax and B_ymax > A_ymax): # 9
+                print("\n\n\n")
+                print(f"{bcolors.FAIL} KAZA BULUNDU 🤕🤕 {bcolors.ENDC}")
+                print("\n\n\n")
+                is_accident_happen = True
+                box = rects[i]
+
+
+            # A ve B ler yer değiştirir: 
+
+            elif (B_xmin < A_xmin and A_xmin < B_xmax and A_xmax > B_xmax) and (B_ymin < A_ymin and A_ymin < B_ymax and A_ymax > B_ymax): # 7
+                print("\n\n\n")
+                print(f"{bcolors.FAIL} KAZA BULUNDU 🤕🤕 {bcolors.ENDC}")
+                print("\n\n\n")
+                is_accident_happen = True
+                box = rects[i]
+            
+            elif (A_xmin < B_xmin and B_xmin < A_xmax and B_xmax > A_xmax) and (A_ymin < B_ymin and B_ymin < A_ymax and B_ymax > A_ymax): # 1
+                print("\n\n\n")
+                print(f"{bcolors.FAIL} KAZA BULUNDU 🤕🤕 {bcolors.ENDC}")
+                print("\n\n\n")
+                is_accident_happen = True
+                box = rects[i]
+
+            elif (A_xmin < B_xmin and B_xmin < A_xmax and B_xmax > A_xmax) and (B_ymin < A_ymin and A_ymin < A_ymax and B_ymax < A_ymax): # 2
+                print("\n\n\n")
+                print(f"{bcolors.FAIL} KAZA BULUNDU 🤕🤕 {bcolors.ENDC}")
+                print("\n\n\n")
+                is_accident_happen = True
+                box = rects[i]
+
+            elif (A_xmin < B_xmin and B_xmin < A_xmax and B_xmax > A_xmax) and (B_ymin < A_ymin and A_ymin < B_ymax and A_ymax > B_ymax): # 3
+                print("\n\n\n")
+                print(f"{bcolors.FAIL} KAZA BULUNDU 🤕🤕 {bcolors.ENDC}")
+                print("\n\n\n")
+                is_accident_happen = True
+                box = rects[i]
+
+
+            elif (B_xmin < A_xmin and A_xmin < B_xmax and A_xmax > B_xmax) and (A_ymin < B_ymin and B_ymin < A_ymax and B_ymax > A_ymax): # 5  
+                print("\n\n\n")
+                print(f"{bcolors.FAIL} KAZA BULUNDU 🤕🤕 {bcolors.ENDC}")
+                print("\n\n\n")
+                is_accident_happen = True
+                box = rects[i]
+
+
+            elif (B_xmin < A_xmin and A_xmin < B_xmax and A_xmax > B_xmax) and (B_ymin < A_ymin and A_ymin < A_ymax and B_ymax > A_ymax): # 6
+                print("\n\n\n")
+                print(f"{bcolors.FAIL} KAZA BULUNDU 🤕🤕 {bcolors.ENDC}")
+                print("\n\n\n")
+                is_accident_happen = True
+                box = rects[i]
+
+            elif (B_xmin < A_xmin and A_xmin < A_xmax and B_xmax > A_xmax) and (B_ymin < A_ymin and A_ymin < B_ymax and A_ymax > B_ymax): # 4 
+                print("\n\n\n")
+                print(f"{bcolors.FAIL} KAZA BULUNDU 🤕🤕 {bcolors.ENDC}")
+                print("\n\n\n")
+                is_accident_happen = True
+                box = rects[i]
+
+            # elif (B_xmin < A_xmin and A_xmin < A_xmax and B_xmax > A_xmax) and (A_ymin < B_ymin and B_ymin < A_ymax and B_ymax > A_ymax):  # 8
+            #     print("\n\n\n")
+            #     print(f"{bcolors.FAIL} KAZA BULUNDU 🤕🤕 {bcolors.ENDC}")
+            #     print("\n\n\n")
+            #     is_accident_happen = True
+            #     box = rects[i]
+
+            elif (B_xmin < A_xmin and A_xmin < A_xmax and B_xmax > A_xmax) and (B_ymin < A_ymin and A_ymin < B_ymax and A_ymax > B_ymax): # 9
+                print("\n\n\n")
+                print(f"{bcolors.FAIL} KAZA BULUNDU 🤕🤕 {bcolors.ENDC}")
+                print("\n\n\n")
+                is_accident_happen = True
+                box = rects[i]    
+
+
 
     return (is_accident_happen, box)
 
