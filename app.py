@@ -35,11 +35,35 @@ def useDetections(detections, img, centroidTracker):
     img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
     rects = draw_rectangles(detections, img)
 
+    find_accidents(rects)
+
     objects = centroidTracker.update(rects)
 
     img = draw_circles(objects, img)
 
     cv2.imshow('Car Accident', img)
+
+def find_accidents(rects):
+    for i in range(len(rects)):
+        A_xmin, A_xmax, A_ymin, A_ymax = rects[i]
+        for j in range(len(rects)):
+            B_xmin, B_xmax, B_ymin, B_ymax = rects[j]
+
+            print("\nLOGLAMA\n")
+            print("BOX-A: ", str(rects[i]))
+            print("BOX-B: ", str(rects[j]))
+
+
+            if A_xmin == B_xmin and A_xmax == B_xmax and A_ymin == B_ymin and A_ymax == B_ymax:
+                print("\nEşit olduğundan devam ediliyor\n")
+                continue
+
+            if A_xmin < B_xmin and B_xmin < A_xmax and A_ymin < B_ymin and B_ymin < A_ymax and B_ymax > A_ymax and B_xmax > A_xmax:
+                print("\n\n\n")
+                print(f"{bcolors.FAIL} KAZA BULUNDU 🤕🤕 {bcolors.ENDC}")
+                print("\n\n\n")
+
+
 
 # Hassaslık oranı araç seçimleri için
 DEFAULT_CONFIDENCE = 0.5
@@ -63,7 +87,7 @@ def draw_rectangles(detections, img):
             pt2 = (xmax, ymax)
 
             rects.append(box)
-            print(box)
+            # print(box)
 
             cv2.rectangle(img, pt1, pt2, (0, 255, 0), 1)
             cv2.putText(img,

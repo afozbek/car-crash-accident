@@ -65,7 +65,7 @@ def validateYOLO(configPath, weightPath, metaPath):
             pass
 
 def YOLO(
-    videoPath="./data/videos/car-accident-2.mp4",
+    videoPath="./data/videos/car-accident-3.mp4",
     configPath = "./cfg/yolov3.cfg",
     weightPath = "./yolov3.weights",
     metaPath = "./cfg/coco-new.data",
@@ -115,7 +115,7 @@ def YOLO(
         # Main App Function
         useDetections(detections, frame_resized, centroidTracker)
 
-        print(1 / (time.time() - prev_time))
+        # print(1 / (time.time() - prev_time))
 
         # If 'esc' or 'q' key pressed break the loop
         k = cv2.waitKey(2) & 0xFF
@@ -129,7 +129,7 @@ if __name__ == "__main__":
     # handle command line arguments
     parser = argparse.ArgumentParser()
     parser.add_argument('-d', '--directory', type=Path, required=False, default=Path(__file__).absolute().parent / "data/videos", help = 'path to default video directory')
-    parser.add_argument('-v', '--video', type=Path, required=False, default = "car-accident-2.mp4", help = 'path to video file')
+    parser.add_argument('-v', '--video', type=Path, required=False, default = "car-accident-4.mp4", help = 'path to video file')
 
     parser.add_argument('--rec', dest='record', action='store_true')
     parser.add_argument('--no-rec', dest='record', action='store_false')
