@@ -35,15 +35,21 @@ def useDetections(detections, img, centroidTracker):
     img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
     rects = draw_rectangles(detections, img)
 
-    find_accidents(rects)
+    (is_accident_happened, box) = find_accidents(rects)
 
     objects = centroidTracker.update(rects)
 
     img = draw_circles(objects, img)
 
+    if is_accident_happened:
+        # Kaza oluştu ise ekrana çiz
+        draw_errors(img, box)
     cv2.imshow('Car Accident', img)
 
 def find_accidents(rects):
+    is_accident_happen = False
+    box = (0,0,0,0)
+
     for i in range(len(rects)):
         A_xmin, A_xmax, A_ymin, A_ymax = rects[i]
         for j in range(len(rects)):
@@ -62,7 +68,10 @@ def find_accidents(rects):
                 print("\n\n\n")
                 print(f"{bcolors.FAIL} KAZA BULUNDU 🤕🤕 {bcolors.ENDC}")
                 print("\n\n\n")
+                is_accident_happen = True
+                box = rects[i]
 
+    return (is_accident_happen, box)
 
 
 # Hassaslık oranı araç seçimleri için
@@ -108,6 +117,20 @@ def draw_circles(objects, img):
         cv2.circle(img, (centroid[0], centroid[1]), 4, (0, 255, 0), -1)
 
     return img
+
+def draw_errors(img, box):
+    xmin, ymin, xmax, ymax = box
+    pt1 = (xmin, ymin)
+    pt2 = (xmax,ymax)
+
+    cv2.rectangle(img, pt1, pt2, (0, 255, 0), 1)
+    cv2.putText(img,
+            "KAZA",
+            (pt1[0], pt1[1] - 5),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            0.5,
+            [0, 0, 255],
+            2)
 
 def convertBack(x, y, w, h):
     xmin = int(round(x - (w / 2)))
