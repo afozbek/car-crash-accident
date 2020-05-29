@@ -44,27 +44,39 @@ def useDetections(detections, img, centroidTracker):
     if is_accident_happened:
         # Kaza oluştu ise ekrana çiz
         draw_errors(img, box)
-    cv2.imshow('Car Accident', img)
+
+    # cv2.imshow("Car Accident", img)
+
+    import matplotlib.pyplot as plt
+    plt.imshow(img)
+    plt.show()
 
 def find_accidents(rects):
     is_accident_happen = False
     box = (0,0,0,0)
 
     for i in range(len(rects)):
-        A_xmin, A_xmax, A_ymin, A_ymax = rects[i]
+        # A_xmin, A_xmax, A_ymin, A_ymax = rects[i]
+        A_xmin, A_ymin, A_xmax, A_ymax = rects[i]
         for j in range(len(rects)):
-            B_xmin, B_xmax, B_ymin, B_ymax = rects[j]
+            # B_xmin, B_xmax, B_ymin, B_ymax = rects[j]
+            B_xmin, B_ymin, B_xmax, B_ymax = rects[j]
+
+            if A_xmin == B_xmin and A_xmax == B_xmax and A_ymin == B_ymin and A_ymax == B_ymax:
+                # print("\nEşit olduğundan devam ediliyor\n")
+                continue
 
             print("\nLOGLAMA\n")
             print("BOX-A: ", str(rects[i]))
             print("BOX-B: ", str(rects[j]))
 
-
-            if A_xmin == B_xmin and A_xmax == B_xmax and A_ymin == B_ymin and A_ymax == B_ymax:
-                print("\nEşit olduğundan devam ediliyor\n")
-                continue
-
-            if A_xmin < B_xmin and B_xmin < A_xmax and A_ymin < B_ymin and B_ymin < A_ymax and B_ymax > A_ymax and B_xmax > A_xmax:
+            if (A_xmin < B_xmin and B_xmin < A_xmax and B_xmax > A_xmax) or (A_ymin < B_ymin and B_ymin < A_ymax and B_ymax > A_ymax):
+                print("\n\n\n")
+                print(f"{bcolors.FAIL} KAZA BULUNDU 🤕🤕 {bcolors.ENDC}")
+                print("\n\n\n")
+                is_accident_happen = True
+                box = rects[i]
+            elif  (B_xmin < A_xmin and A_xmin < B_xmax and A_xmax > B_xmax) or (B_ymin < A_ymin and A_ymin < B_ymax and A_ymax > B_ymax):
                 print("\n\n\n")
                 print(f"{bcolors.FAIL} KAZA BULUNDU 🤕🤕 {bcolors.ENDC}")
                 print("\n\n\n")
@@ -120,16 +132,16 @@ def draw_circles(objects, img):
 
 def draw_errors(img, box):
     xmin, ymin, xmax, ymax = box
-    pt1 = (xmin, ymin)
-    pt2 = (xmax,ymax)
+    pt1 = (xmin - 5, ymin - 5)
+    pt2 = (xmax + 5,ymax + 5)
 
-    cv2.rectangle(img, pt1, pt2, (0, 255, 0), 1)
+    cv2.rectangle(img, pt1, pt2, (255, 0, 0), 1)
     cv2.putText(img,
             "KAZA",
             (pt1[0], pt1[1] - 5),
             cv2.FONT_HERSHEY_SIMPLEX,
             0.5,
-            [0, 0, 255],
+            [255, 0, 0],
             2)
 
 def convertBack(x, y, w, h):
