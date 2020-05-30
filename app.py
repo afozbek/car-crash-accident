@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+import matplotlib.pyplot as plt
 
 from deepcrash.centroidtracker import CentroidTracker
 import argparse
@@ -45,7 +46,6 @@ def useDetections(detections, img, centroidTracker):
 
     cv2.imshow("Car Accident", img)
 
-    import matplotlib.pyplot as plt
     # plt.imshow(img)
     # plt.show()
 
@@ -68,14 +68,28 @@ def find_accidents(rects):
             print("BOX-A: ", str(rects[i]))
             print("BOX-B: ", str(rects[j]))
             
-            #if (A_xmin < B_xmin and B_xmin < A_xmax and B_xmax > A_xmax) and ((A_ymin < B_ymin and B_ymin < A_ymax ) or (B_ymin < A_ymin and A_ymin < B_ymax) ) or (A_ymin < B_ymin and B_ymin < A_ymax and B_ymax > A_ymax):
+            # KAZA OLMAMA DURUMLARI
+            if A_ymin < A_ymax and A_ymax < B_ymin and B_ymax > B_ymin:
+                continue
 
+            elif A_xmin < A_xmax and A_xmax < B_xmin and B_xmax > B_xmin:
+                continue
+
+            elif B_xmin < B_xmax and B_xmax < A_xmin and A_xmax > A_xmin:
+                continue
+
+            elif B_ymin < B_ymax and B_ymax < A_ymin and A_ymax > A_ymin :
+                continue
+
+            # KAZA OLMA DURUMLARI 
+            #
             if (A_xmin < B_xmin and B_xmin < A_xmax and B_xmax > A_xmax) and (A_ymin < B_ymin and B_ymin < A_ymax and B_ymax > A_ymax): # 7
                 print("\n\n\n")
                 print(f"{bcolors.FAIL} KAZA BULUNDU 🤕🤕 {bcolors.ENDC}")
                 print("\n\n\n")
                 is_accident_happen = True
                 box = rects[i]
+
             elif (B_xmin < A_xmin and A_xmin < B_xmax and A_xmax > B_xmax) and (B_ymin < A_ymin and A_ymin < B_ymax and A_ymax > B_ymax): # 1
                 print("\n\n\n")
                 print(f"{bcolors.FAIL} KAZA BULUNDU 🤕🤕 {bcolors.ENDC}")
@@ -111,7 +125,7 @@ def find_accidents(rects):
                 is_accident_happen = True
                 box = rects[i]
 
-            elif (A_xmin < B_xmin and B_xmin < B_xmax and A_xmax > B_xmax) and (A_ymin < B_ymin and B_ymin < A_ymax and B_ymax > A_ymax): # 4 
+            elif (A_xmin < B_xmin and B_xmin < B_xmax and A_xmax > B_xmax) and (B_ymin < A_ymin and A_ymin < B_ymax and A_ymax > B_ymax): # 4 
                 print("\n\n\n")
                 print(f"{bcolors.FAIL} KAZA BULUNDU 🤕🤕 {bcolors.ENDC}")
                 print("\n\n\n")
@@ -135,19 +149,6 @@ def find_accidents(rects):
 
             # A ve B ler yer değiştirir: 
 
-            elif (B_xmin < A_xmin and A_xmin < B_xmax and A_xmax > B_xmax) and (B_ymin < A_ymin and A_ymin < B_ymax and A_ymax > B_ymax): # 7
-                print("\n\n\n")
-                print(f"{bcolors.FAIL} KAZA BULUNDU 🤕🤕 {bcolors.ENDC}")
-                print("\n\n\n")
-                is_accident_happen = True
-                box = rects[i]
-            
-            elif (A_xmin < B_xmin and B_xmin < A_xmax and B_xmax > A_xmax) and (A_ymin < B_ymin and B_ymin < A_ymax and B_ymax > A_ymax): # 1
-                print("\n\n\n")
-                print(f"{bcolors.FAIL} KAZA BULUNDU 🤕🤕 {bcolors.ENDC}")
-                print("\n\n\n")
-                is_accident_happen = True
-                box = rects[i]
 
             elif (A_xmin < B_xmin and B_xmin < A_xmax and B_xmax > A_xmax) and (B_ymin < A_ymin and A_ymin < A_ymax and B_ymax < A_ymax): # 2
                 print("\n\n\n")
@@ -156,20 +157,8 @@ def find_accidents(rects):
                 is_accident_happen = True
                 box = rects[i]
 
-            elif (A_xmin < B_xmin and B_xmin < A_xmax and B_xmax > A_xmax) and (B_ymin < A_ymin and A_ymin < B_ymax and A_ymax > B_ymax): # 3
-                print("\n\n\n")
-                print(f"{bcolors.FAIL} KAZA BULUNDU 🤕🤕 {bcolors.ENDC}")
-                print("\n\n\n")
-                is_accident_happen = True
-                box = rects[i]
 
 
-            elif (B_xmin < A_xmin and A_xmin < B_xmax and A_xmax > B_xmax) and (A_ymin < B_ymin and B_ymin < A_ymax and B_ymax > A_ymax): # 5  
-                print("\n\n\n")
-                print(f"{bcolors.FAIL} KAZA BULUNDU 🤕🤕 {bcolors.ENDC}")
-                print("\n\n\n")
-                is_accident_happen = True
-                box = rects[i]
 
 
             elif (B_xmin < A_xmin and A_xmin < B_xmax and A_xmax > B_xmax) and (B_ymin < A_ymin and A_ymin < A_ymax and B_ymax > A_ymax): # 6
@@ -179,7 +168,8 @@ def find_accidents(rects):
                 is_accident_happen = True
                 box = rects[i]
 
-            elif (B_xmin < A_xmin and A_xmin < A_xmax and B_xmax > A_xmax) and (B_ymin < A_ymin and A_ymin < B_ymax and A_ymax > B_ymax): # 4 
+
+            elif (B_xmin < A_xmin and A_xmin < A_xmax and B_xmax > A_xmax) and (A_ymin < B_ymin and B_ymin < A_ymax and B_ymax > A_ymax): # 4 
                 print("\n\n\n")
                 print(f"{bcolors.FAIL} KAZA BULUNDU 🤕🤕 {bcolors.ENDC}")
                 print("\n\n\n")
