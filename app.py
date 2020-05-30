@@ -54,10 +54,9 @@ def find_accidents(rects):
     box = (0,0,0,0)
 
     for i in range(len(rects)):
-        # A_xmin, A_xmax, A_ymin, A_ymax = rects[i]
         A_xmin, A_ymin, A_xmax, A_ymax = rects[i]
+
         for j in range(len(rects)):
-            # B_xmin, B_xmax, B_ymin, B_ymax = rects[j]
             B_xmin, B_ymin, B_xmax, B_ymax = rects[j]
 
             if A_xmin == B_xmin and A_xmax == B_xmax and A_ymin == B_ymin and A_ymax == B_ymax:
@@ -67,6 +66,8 @@ def find_accidents(rects):
             print("\nLOGLAMA\n")
             print("BOX-A: ", str(rects[i]))
             print("BOX-B: ", str(rects[j]))
+            print("Uzunluk: " + str(len(rects)))
+
             
             # KAZA OLMAMA DURUMLARI
             if A_ymin < A_ymax and A_ymax < B_ymin and B_ymax > B_ymin:
@@ -81,53 +82,63 @@ def find_accidents(rects):
             elif B_ymin < B_ymax and B_ymax < A_ymin and A_ymax > A_ymin :
                 continue
 
+
             # KAZA OLMA DURUMLARI 
             #
-            if (A_xmin < B_xmin and B_xmin < A_xmax and B_xmax > A_xmax) and (A_ymin < B_ymin and B_ymin < A_ymax and B_ymax > A_ymax): # 7
+
+
+            if (B_xmin < A_xmin + 2 and A_xmin + 2 < B_xmax - 2 and A_xmax > B_xmax - 2) and (B_ymin < A_ymin + 2 and A_ymin + 2 < B_ymax - 2 and A_ymax > B_ymax - 2): # 01
                 print("\n\n\n")
                 print(f"{bcolors.FAIL} KAZA BULUNDU 🤕🤕 {bcolors.ENDC}")
+                print("01. durum")
                 print("\n\n\n")
                 is_accident_happen = True
                 box = rects[i]
 
-            elif (B_xmin < A_xmin and A_xmin < B_xmax and A_xmax > B_xmax) and (B_ymin < A_ymin and A_ymin < B_ymax and A_ymax > B_ymax): # 1
+            elif (B_xmin < A_xmin + 2 and A_xmin + 2 < B_xmax - 2 and A_xmax > B_xmax - 2) and (A_ymin < B_ymin and B_ymin < B_ymax and A_ymax < B_ymax): # 02
                 print("\n\n\n")
                 print(f"{bcolors.FAIL} KAZA BULUNDU 🤕🤕 {bcolors.ENDC}")
+                print("02. durum")
                 print("\n\n\n")
                 is_accident_happen = True
                 box = rects[i]
 
-            elif (B_xmin < A_xmin and A_xmin < B_xmax and A_xmax > B_xmax) and (A_ymin < B_ymin and B_ymin < B_ymax and A_ymax < B_ymax): # 2
+            elif (B_xmin < A_xmin + 2 and A_xmin + 2 < B_xmax - 2 and A_xmax > B_xmax - 2) and (A_ymin < B_ymin + 2 and B_ymin + 2 < A_ymax - 2 and B_ymax > A_ymax - 2): # 03
                 print("\n\n\n")
                 print(f"{bcolors.FAIL} KAZA BULUNDU 🤕🤕 {bcolors.ENDC}")
+                print("03. durum")
                 print("\n\n\n")
                 is_accident_happen = True
                 box = rects[i]
 
-            elif (B_xmin < A_xmin and A_xmin < B_xmax and A_xmax > B_xmax) and (A_ymin < B_ymin and B_ymin < A_ymax and B_ymax > A_ymax): # 3
+            elif (A_xmin < B_xmin and B_xmin < B_xmax and A_xmax > B_xmax) and (B_ymin < A_ymin + 2 and A_ymin + 2 < B_ymax - 2 and A_ymax > B_ymax - 2): # 04 
                 print("\n\n\n")
                 print(f"{bcolors.FAIL} KAZA BULUNDU 🤕🤕 {bcolors.ENDC}")
+                print("04. durum")
                 print("\n\n\n")
                 is_accident_happen = True
                 box = rects[i]
 
-            elif (A_xmin < B_xmin and B_xmin < A_xmax and B_xmax > A_xmax) and (B_ymin < A_ymin and A_ymin < B_ymax and A_ymax > B_ymax): # 5  
+            elif (A_xmin < B_xmin + 2 and B_xmin + 2 < A_xmax - 2 and B_xmax > A_xmax - 2) and (B_ymin < A_ymin + 2 and A_ymin + 2 < B_ymax - 2 and A_ymax > B_ymax - 2): # 05  
                 print("\n\n\n")
                 print(f"{bcolors.FAIL} KAZA BULUNDU 🤕🤕 {bcolors.ENDC}")
+                print("05. durum")
                 print("\n\n\n")
                 is_accident_happen = True
                 box = rects[i]
 
-            elif (A_xmin < B_xmin and B_xmin < A_xmax and B_xmax > A_xmax) and (A_ymin < B_ymin and B_ymin < B_ymax and A_ymax > B_ymax): # 6
+            elif (A_xmin < B_xmin + 2 and B_xmin + 2 < A_xmax - 2 and B_xmax > A_xmax - 2) and (A_ymin < B_ymin and B_ymin < B_ymax and A_ymax > B_ymax): # 06
                 print("\n\n\n")
                 print(f"{bcolors.FAIL} KAZA BULUNDU 🤕🤕 {bcolors.ENDC}")
+                print("06. durum")
                 print("\n\n\n")
                 is_accident_happen = True
                 box = rects[i]
 
-            elif (A_xmin < B_xmin and B_xmin < B_xmax and A_xmax > B_xmax) and (B_ymin < A_ymin and A_ymin < B_ymax and A_ymax > B_ymax): # 4 
+            elif (A_xmin < B_xmin + 2 and B_xmin + 2 < A_xmax - 2 and B_xmax > A_xmax - 2) and (A_ymin < B_ymin + 2 and B_ymin + 2 < A_ymax - 2 and B_ymax > A_ymax - 2): # 07
                 print("\n\n\n")
                 print(f"{bcolors.FAIL} KAZA BULUNDU 🤕🤕 {bcolors.ENDC}")
+                print("07. durum")
                 print("\n\n\n")
                 is_accident_happen = True
                 box = rects[i]
@@ -139,9 +150,10 @@ def find_accidents(rects):
             #     is_accident_happen = True
             #     box = rects[i]
 
-            elif (A_xmin < B_xmin and B_xmin < B_xmax and A_xmax > B_xmax) and (A_ymin < B_ymin and B_ymin < A_ymax and B_ymax > A_ymax): # 9
+            elif (A_xmin < B_xmin and B_xmin < B_xmax and A_xmax > B_xmax) and (A_ymin < B_ymin + 2 and B_ymin + 2 < A_ymax - 2 and B_ymax > A_ymax - 2): # 9
                 print("\n\n\n")
                 print(f"{bcolors.FAIL} KAZA BULUNDU 🤕🤕 {bcolors.ENDC}")
+                print("09. durum")
                 print("\n\n\n")
                 is_accident_happen = True
                 box = rects[i]
@@ -153,6 +165,7 @@ def find_accidents(rects):
             elif (A_xmin < B_xmin and B_xmin < A_xmax and B_xmax > A_xmax) and (B_ymin < A_ymin and A_ymin < A_ymax and B_ymax < A_ymax): # 2
                 print("\n\n\n")
                 print(f"{bcolors.FAIL} KAZA BULUNDU 🤕🤕 {bcolors.ENDC}")
+                print("2. durum")
                 print("\n\n\n")
                 is_accident_happen = True
                 box = rects[i]
@@ -164,6 +177,7 @@ def find_accidents(rects):
             elif (B_xmin < A_xmin and A_xmin < B_xmax and A_xmax > B_xmax) and (B_ymin < A_ymin and A_ymin < A_ymax and B_ymax > A_ymax): # 6
                 print("\n\n\n")
                 print(f"{bcolors.FAIL} KAZA BULUNDU 🤕🤕 {bcolors.ENDC}")
+                print("6. durum")                
                 print("\n\n\n")
                 is_accident_happen = True
                 box = rects[i]
@@ -172,6 +186,7 @@ def find_accidents(rects):
             elif (B_xmin < A_xmin and A_xmin < A_xmax and B_xmax > A_xmax) and (A_ymin < B_ymin and B_ymin < A_ymax and B_ymax > A_ymax): # 4 
                 print("\n\n\n")
                 print(f"{bcolors.FAIL} KAZA BULUNDU 🤕🤕 {bcolors.ENDC}")
+                print("4. durum")
                 print("\n\n\n")
                 is_accident_happen = True
                 box = rects[i]
@@ -186,6 +201,7 @@ def find_accidents(rects):
             elif (B_xmin < A_xmin and A_xmin < A_xmax and B_xmax > A_xmax) and (B_ymin < A_ymin and A_ymin < B_ymax and A_ymax > B_ymax): # 9
                 print("\n\n\n")
                 print(f"{bcolors.FAIL} KAZA BULUNDU 🤕🤕 {bcolors.ENDC}")
+                print("9. durum")
                 print("\n\n\n")
                 is_accident_happen = True
                 box = rects[i]    
@@ -215,12 +231,15 @@ def draw_rectangles(detections, img):
 
             pt1 = (xmin, ymin)
             pt2 = (xmax, ymax)
+            if detection[0].decode() == "car" or detection[0].decode() == "bus" or detection[0].decode() == "truck" or detection[0].decode() == "motorbike":
+                rects.append(box)
+                print("len box" + str(len(box)))
+                print("BOX:")
+                print(box)
+                print(" ")
 
-            rects.append(box)
-            # print(box)
-
-            cv2.rectangle(img, pt1, pt2, (0, 255, 0), 1)
-            cv2.putText(img,
+                cv2.rectangle(img, pt1, pt2, (0, 255, 0), 1)
+                cv2.putText(img,
                     detection[0].decode() +
                     " [" + str(round(detection[1] * 100, 2)) + "]",
                     (pt1[0], pt1[1] - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5,
