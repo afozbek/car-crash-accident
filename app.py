@@ -66,27 +66,23 @@ def find_accidents(rects):
             print("\nLOGLAMA\n")
             print("BOX-A: ", str(rects[i]))
             print("BOX-B: ", str(rects[j]))
-            print("Uzunluk: " + str(len(rects)))
 
             
             # KAZA OLMAMA DURUMLARI
-            if A_ymin < A_ymax and A_ymax < B_ymin and B_ymax > B_ymin:
+            if  A_ymax < B_ymin:
                 continue
 
-            elif A_xmin < A_xmax and A_xmax < B_xmin and B_xmax > B_xmin:
+            elif A_xmax < B_xmin:
                 continue
 
-            elif B_xmin < B_xmax and B_xmax < A_xmin and A_xmax > A_xmin:
+            elif B_xmax < A_xmin:
                 continue
 
-            elif B_ymin < B_ymax and B_ymax < A_ymin and A_ymax > A_ymin :
+            elif B_ymax < A_ymin:
                 continue
 
 
             # KAZA OLMA DURUMLARI 
-            #
-
-
             if (B_xmin < A_xmin + 2 and A_xmin + 2 < B_xmax - 2 and A_xmax > B_xmax - 2) and (B_ymin < A_ymin + 2 and A_ymin + 2 < B_ymax - 2 and A_ymax > B_ymax - 2): # 01
                 print("\n\n\n")
                 print(f"{bcolors.FAIL} KAZA BULUNDU 🤕🤕 {bcolors.ENDC}")
@@ -231,6 +227,7 @@ def draw_rectangles(detections, img):
 
             pt1 = (xmin, ymin)
             pt2 = (xmax, ymax)
+            
             if detection[0].decode() == "car" or detection[0].decode() == "bus" or detection[0].decode() == "truck" or detection[0].decode() == "motorbike":
                 rects.append(box)
                 print("len box" + str(len(box)))
