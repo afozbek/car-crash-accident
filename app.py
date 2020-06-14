@@ -89,7 +89,7 @@ def find_accidents(rects):
                 print("01. durum")
                 print("\n\n\n")
                 is_accident_happen = True
-                box = rects[i]
+                box = [B_xmin,B_ymin,A_xmax,A_ymax]
 
             elif (B_xmin < A_xmin + 2 and A_xmin + 2 < B_xmax - 2 and A_xmax > B_xmax - 2) and (A_ymin < B_ymin and B_ymin < B_ymax and A_ymax < B_ymax): # 02
                 print("\n\n\n")
@@ -97,7 +97,7 @@ def find_accidents(rects):
                 print("02. durum")
                 print("\n\n\n")
                 is_accident_happen = True
-                box = rects[i]
+                box = [B_xmin,A_ymin,A_xmax,A_ymax]
 
             elif (B_xmin < A_xmin + 2 and A_xmin + 2 < B_xmax - 2 and A_xmax > B_xmax - 2) and (A_ymin < B_ymin + 2 and B_ymin + 2 < A_ymax - 2 and B_ymax > A_ymax - 2): # 03
                 print("\n\n\n")
@@ -105,7 +105,7 @@ def find_accidents(rects):
                 print("03. durum")
                 print("\n\n\n")
                 is_accident_happen = True
-                box = rects[i]
+                box = [B_xmin,A_ymin,A_xmax,B_ymax]
 
             elif (A_xmin < B_xmin and B_xmin < B_xmax and A_xmax > B_xmax) and (B_ymin < A_ymin + 2 and A_ymin + 2 < B_ymax - 2 and A_ymax > B_ymax - 2): # 04 
                 print("\n\n\n")
@@ -113,7 +113,7 @@ def find_accidents(rects):
                 print("04. durum")
                 print("\n\n\n")
                 is_accident_happen = True
-                box = rects[i]
+                box = [A_xmin,B_ymin,A_xmax,A_ymax]
 
             elif (A_xmin < B_xmin + 2 and B_xmin + 2 < A_xmax - 2 and B_xmax > A_xmax - 2) and (B_ymin < A_ymin + 2 and A_ymin + 2 < B_ymax - 2 and A_ymax > B_ymax - 2): # 05  
                 print("\n\n\n")
@@ -121,7 +121,7 @@ def find_accidents(rects):
                 print("05. durum")
                 print("\n\n\n")
                 is_accident_happen = True
-                box = rects[i]
+                box = [A_xmin,B_ymin,B_xmax,A_ymax]
 
             elif (A_xmin < B_xmin + 2 and B_xmin + 2 < A_xmax - 2 and B_xmax > A_xmax - 2) and (A_ymin < B_ymin and B_ymin < B_ymax and A_ymax > B_ymax): # 06
                 print("\n\n\n")
@@ -129,7 +129,7 @@ def find_accidents(rects):
                 print("06. durum")
                 print("\n\n\n")
                 is_accident_happen = True
-                box = rects[i]
+                box = [A_xmin,A_ymin,B_xmax,A_xmax]
 
             elif (A_xmin < B_xmin + 2 and B_xmin + 2 < A_xmax - 2 and B_xmax > A_xmax - 2) and (A_ymin < B_ymin + 2 and B_ymin + 2 < A_ymax - 2 and B_ymax > A_ymax - 2): # 07
                 print("\n\n\n")
@@ -137,70 +137,58 @@ def find_accidents(rects):
                 print("07. durum")
                 print("\n\n\n")
                 is_accident_happen = True
-                box = rects[i]
+                box = [A_xmin,A_ymin,B_xmax,B_ymax]
 
-            # elif (A_xmin < B_xmin and B_xmin < B_xmax and A_xmax > B_xmax) and (B_ymin < A_ymin and A_ymin < B_ymax and A_ymax > B_ymax):  # 8
-            #     print("\n\n\n")
-            #     print(f"{bcolors.FAIL} KAZA BULUNDU 🤕🤕 {bcolors.ENDC}")
-            #     print("\n\n\n")
-            #     is_accident_happen = True
-            #     box = rects[i]
-
-            elif (A_xmin < B_xmin and B_xmin < B_xmax and A_xmax > B_xmax) and (A_ymin < B_ymin + 2 and B_ymin + 2 < A_ymax - 2 and B_ymax > A_ymax - 2): # 9
+            elif (A_xmin < B_xmin and B_xmin < B_xmax and A_xmax > B_xmax) and (A_ymin < B_ymin + 2 and B_ymin + 2 < A_ymax - 2 and B_ymax > A_ymax - 2): # 08
                 print("\n\n\n")
                 print(f"{bcolors.FAIL} KAZA BULUNDU 🤕🤕 {bcolors.ENDC}")
-                print("09. durum")
+                print("08. durum")
                 print("\n\n\n")
                 is_accident_happen = True
-                box = rects[i]
+                box = [A_xmin,A_ymin,A_xmax,B_ymax]
 
 
             # A ve B ler yer değiştirir: 
 
 
-            elif (A_xmin < B_xmin and B_xmin < A_xmax and B_xmax > A_xmax) and (B_ymin < A_ymin and A_ymin < A_ymax and B_ymax < A_ymax): # 2
+            elif (A_xmin < B_xmin and B_xmin < A_xmax and B_xmax > A_xmax) and (B_ymin < A_ymin and A_ymin < A_ymax and B_ymax > A_ymax): # 09
                 print("\n\n\n")
                 print(f"{bcolors.FAIL} KAZA BULUNDU 🤕🤕 {bcolors.ENDC}")
                 print("2. durum")
                 print("\n\n\n")
                 is_accident_happen = True
-                box = rects[i]
+                box = [A_xmin,B_ymin,B_xmax,B_ymax]
 
 
 
 
 
-            elif (B_xmin < A_xmin and A_xmin < B_xmax and A_xmax > B_xmax) and (B_ymin < A_ymin and A_ymin < A_ymax and B_ymax > A_ymax): # 6
+            elif (B_xmin < A_xmin and A_xmin < B_xmax and A_xmax > B_xmax) and (B_ymin < A_ymin and A_ymin < A_ymax and B_ymax > A_ymax): # 10
                 print("\n\n\n")
                 print(f"{bcolors.FAIL} KAZA BULUNDU 🤕🤕 {bcolors.ENDC}")
                 print("6. durum")                
                 print("\n\n\n")
                 is_accident_happen = True
-                box = rects[i]
+                box = rects[B_xmin,B_ymin,A_xmax,B_ymin]
 
 
-            elif (B_xmin < A_xmin and A_xmin < A_xmax and B_xmax > A_xmax) and (A_ymin < B_ymin and B_ymin < A_ymax and B_ymax > A_ymax): # 4 
+            elif (B_xmin < A_xmin and A_xmin < A_xmax and B_xmax > A_xmax) and (A_ymin < B_ymin and B_ymin < A_ymax and B_ymax > A_ymax): # 11
                 print("\n\n\n")
                 print(f"{bcolors.FAIL} KAZA BULUNDU 🤕🤕 {bcolors.ENDC}")
                 print("4. durum")
                 print("\n\n\n")
                 is_accident_happen = True
-                box = rects[i]
+                box = [B_xmin,A_ymin,B_xmax,B_ymax]
 
-            # elif (B_xmin < A_xmin and A_xmin < A_xmax and B_xmax > A_xmax) and (A_ymin < B_ymin and B_ymin < A_ymax and B_ymax > A_ymax):  # 8
-            #     print("\n\n\n")
-            #     print(f"{bcolors.FAIL} KAZA BULUNDU 🤕🤕 {bcolors.ENDC}")
-            #     print("\n\n\n")
-            #     is_accident_happen = True
-            #     box = rects[i]
 
-            elif (B_xmin < A_xmin and A_xmin < A_xmax and B_xmax > A_xmax) and (B_ymin < A_ymin and A_ymin < B_ymax and A_ymax > B_ymax): # 9
+
+            elif (B_xmin < A_xmin and A_xmin < A_xmax and B_xmax > A_xmax) and (B_ymin < A_ymin and A_ymin < B_ymax and A_ymax > B_ymax): # 12
                 print("\n\n\n")
                 print(f"{bcolors.FAIL} KAZA BULUNDU 🤕🤕 {bcolors.ENDC}")
                 print("9. durum")
                 print("\n\n\n")
                 is_accident_happen = True
-                box = rects[i]    
+                box = [B_xmin,B_ymin,B_xmax,A_ymax]    
 
 
 
