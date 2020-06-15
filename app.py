@@ -44,10 +44,10 @@ def useDetections(detections, img, centroidTracker):
         # Kaza oluştu ise ekrana çiz
         draw_errors(img, box)
 
-    cv2.imshow("Car Accident", img)
+    # cv2.imshow("Car Accident", img)
 
-    # plt.imshow(img)
-    # plt.show()
+    plt.imshow(img)
+    plt.show()
 
 def find_accidents(rects):
     is_accident_happen = False
@@ -215,8 +215,9 @@ def draw_rectangles(detections, img):
 
             pt1 = (xmin, ymin)
             pt2 = (xmax, ymax)
+            detected = detection[0].decode()
             
-            if detection[0].decode() == "car" or detection[0].decode() == "bus" or detection[0].decode() == "truck" or detection[0].decode() == "motorbike":
+            if detected == "car" or detected == "bus" or detected == "truck" or detected == "motorbike":
                 rects.append(box)
                 print("len box" + str(len(box)))
                 print("BOX:")
