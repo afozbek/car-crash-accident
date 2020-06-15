@@ -129,7 +129,7 @@ if __name__ == "__main__":
     # handle command line arguments
     parser = argparse.ArgumentParser()
     parser.add_argument('-d', '--directory', type=Path, required=False, default=Path(__file__).absolute().parent / "data/videos", help = 'path to default video directory')
-    parser.add_argument('-v', '--video', type=Path, required=False, default = "t_6.mp4", help = 'path to video file')
+    parser.add_argument('-v', '--video', type=Path, required=False, default = "new_1.mp4", help = 'path to video file')
 
     parser.add_argument('--rec', dest='record', action='store_true')
     parser.add_argument('--no-rec', dest='record', action='store_false')

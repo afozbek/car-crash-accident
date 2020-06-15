@@ -260,13 +260,13 @@ def draw_errors(img, box):
     pt1 = (xmin - 5, ymin - 5)
     pt2 = (xmax + 5,ymax + 5)
 
-    cv2.rectangle(img, pt1, pt2, (255, 0, 0), 1)
+    cv2.rectangle(img, pt1, pt2, (0, 0, 255), 1)
     cv2.putText(img,
-            "KAZA",
+            "KAZA OLUŞTU",
             (pt1[0], pt1[1] - 5),
             cv2.FONT_HERSHEY_SIMPLEX,
             0.5,
-            [255, 0, 0],
+            [0, 0, 255],
             2)
 
 def convertBack(x, y, w, h):
