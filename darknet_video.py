@@ -7,31 +7,11 @@ import numpy as np
 import time
 import darknet
 
-def convertBack(x, y, w, h):
-    xmin = int(round(x - (w / 2)))
-    xmax = int(round(x + (w / 2)))
-    ymin = int(round(y - (h / 2)))
-    ymax = int(round(y + (h / 2)))
-    return xmin, ymin, xmax, ymax
+import argparse
+from pathlib import Path
 
-
-def cvDrawBoxes(detections, img):
-    for detection in detections:
-        x, y, w, h = detection[2][0],\
-            detection[2][1],\
-            detection[2][2],\
-            detection[2][3]
-        xmin, ymin, xmax, ymax = convertBack(
-            float(x), float(y), float(w), float(h))
-        pt1 = (xmin, ymin)
-        pt2 = (xmax, ymax)
-        cv2.rectangle(img, pt1, pt2, (0, 255, 0), 1)
-        cv2.putText(img,
-                    detection[0].decode() +
-                    " [" + str(round(detection[1] * 100, 2)) + "]",
-                    (pt1[0], pt1[1] - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5,
-                    [0, 255, 0], 2)
-    return img
+from app import useDetections, bcolors
+from deepcrash.centroidtracker import CentroidTracker
 
 netMain = None
 metaMain = None
@@ -85,7 +65,7 @@ def validateYOLO(configPath, weightPath, metaPath):
             pass
 
 def YOLO(
-    videoPath="./data/videos/car-accident-2.mp4",
+    videoPath="./data/videos/car-accident-3.mp4",
     configPath = "./cfg/yolov3.cfg",
     weightPath = "./yolov3.weights",
     metaPath = "./cfg/coco-new.data",
@@ -94,8 +74,10 @@ def YOLO(
     try:
         validateYOLO(configPath, weightPath, metaPath)
     except Exception:
-        print("Error Happened in ValidateYOLo")
+        print("Error Happened in ValidateYOLO")
         return
+
+    centroidTracker = CentroidTracker(50)
 
     # Select a video element to apply YOLO
     cap = cv2.VideoCapture(videoPath)
@@ -109,26 +91,31 @@ def YOLO(
         "output.avi", cv2.VideoWriter_fourcc(*"MJPG"), 10.0,
         (darknet.network_width(netMain), darknet.network_height(netMain)))
 
-    print("Starting the YOLO loop...")
-
     # Create an image we reuse for each detect
     darknet_image = darknet.make_image(darknet.network_width(netMain),
                                     darknet.network_height(netMain),3)
 
-    # Start the big YOLO record loop
+    # Prepare video
+    print("Starting the YOLO loop...")
+
     while True:
         prev_time = time.time()
         ret, frame_read = cap.read()
         frame_rgb = cv2.cvtColor(frame_read, cv2.COLOR_BGR2RGB)
+
+        # Resized borderless video frame
         frame_resized = cv2.resize(frame_rgb, (darknet.network_width(netMain), darknet.network_height(netMain)), interpolation=cv2.INTER_LINEAR)
 
-        darknet.copy_image_from_bytes(darknet_image,frame_resized.tobytes())
+        darknet.copy_image_from_bytes(darknet_image, frame_resized.tobytes())
 
+        # We have now detections dictionary
         detections = darknet.detect_image(netMain, metaMain, darknet_image, thresh=0.25)
-        image = cvDrawBoxes(detections, frame_resized)
-        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-        print(1 / (time.time() - prev_time))
-        cv2.imshow('Car Accident', image)
+
+        # Inside app.py
+        # Main App Function
+        useDetections(detections, frame_resized, centroidTracker)
+
+        # print(1 / (time.time() - prev_time))
 
         # If 'esc' or 'q' key pressed break the loop
         k = cv2.waitKey(2) & 0xFF
@@ -139,4 +126,27 @@ def YOLO(
     out.release()
 
 if __name__ == "__main__":
-    YOLO(screenRecord=True)
+    # handle command line arguments
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-d', '--directory', type=Path, required=False, default=Path(__file__).absolute().parent / "data/videos", help = 'path to default video directory')
+    parser.add_argument('-v', '--video', type=Path, required=False, default = "new_1.mp4", help = 'path to video file')
+
+    parser.add_argument('--rec', dest='record', action='store_true')
+    parser.add_argument('--no-rec', dest='record', action='store_false')
+    parser.set_defaults(record=False)
+
+    args = vars(parser.parse_args())
+
+    dirPath = args["directory"]
+    videoPath = args["video"]
+    totalVideoPath = args["directory"] / args["video"]
+
+    if os.path.exists(totalVideoPath):
+        print(f"{bcolors.OKGREEN}\t MESSAGE: Starting the YOLO func 🤘🤘.{bcolors.ENDC}")
+
+        YOLO(videoPath=str(totalVideoPath), screenRecord=args["record"])
+    else:
+        print(f"{bcolors.FAIL}\t VIDEO YUKLENIRKEN HATA OLUŞTU 🤕🤕 {bcolors.ENDC}")
+        print("The video path is not correct. Please check the video file path \n")
+
+    print(f"{bcolors.OKGREEN}\t YOLO BAŞARI İLE SONLANDIRILDI! TEBRİK EDERİM 😏😇 {bcolors.ENDC}")
