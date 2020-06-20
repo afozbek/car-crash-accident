@@ -1,5 +1,5 @@
 # Car Crash Accident Project
-Projemiz, tespit edilen nesnelerin koordinatların kesişme durumuna bakarak kaza tespiti yapmaktadır. Kaza tespiti yapmak için Darknet YOLO V3 kullanılmıştır. Otomobil, motosiklet, bisiklet ve otobüs koordinatlarına bakarak kaza tespiti yapılmaktadır. Algoritma "T" şeklindeki kazalarda, tek şeritli yolda çekilmiş kazalarda düzgün çalışmaktadır.
+Projemiz, tespit edilen nesnelerin koordinatların kesişme durumuna bakarak kaza tespiti yapmaktadır. Kaza tespiti yapmak için Darknet YOLO V3 kullanılmıştır. Otomobil, motosiklet, bisiklet ve otobüs koordinatlarına bakarak kaza tespiti yapılmaktadır. Algoritma "T" şeklindeki kazalarda, tek şeritli yolda gündüz vakti çekilmiş kaza videolarında düzgün çalışmaktadır.
 
 ## Projeyi kendi bilgisayarınızda çalıştırmak için
 - [Darknet'i](https://github.com/AlexeyAB/darknet) bilgisayarınıza kurun.
