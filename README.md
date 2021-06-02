@@ -1,6 +1,6 @@
 # Car Crash Accident Project
 
-Yolların kesiştiği noktalgsjdhgsjdkwd warda sıklıkla trafik kazaları meydana gelmektedir. Kaza olduğu anda uyarı verecek bir sistem, kazalara hızlı müdahale edilmesi için gereklilik arz etmektedir. Projemiz, özellikle yolların kesiştiği noktalarda gerçekleşen "T" şeklindeki kazaları tespit edebilmektedir.
+Yolların kesiştiğigjbamjbskjcqsc,jn,XSuğu anda uyarı verecek bir sistem, kazalara hızlı müdahale edilmesi için gereklilik arz etmektedir. Projemiz, özellikle yolların kesiştiği noktalarda gerçekleşen "T" şeklindeki kazaları tespit edebilmektedir.
 
 Projede, tespit edilen nesnelerin koordinatlarının kesişme durumuna bakarak kaza tespiti yapılmaktadır. Kaza tespiti yapmak için Darknet YOLO V3 kullanılmıştır. Otomobil, motosiklet, bisiklet ve otobüs koordinatlarına bakarak kaza tespiti yapılmaktadır. Algoritma "T" şeklindeki kazalarda, tek şeritli yolda gündüz vakti çekilmiş kaza videolarında düzgün çalışmaktadır. Proje Ubuntu 18.04 işletim sisteminde geliştirilmiştir.
 
